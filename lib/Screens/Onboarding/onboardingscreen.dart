@@ -54,7 +54,7 @@ class Onboardingscreen extends StatelessWidget {
         },
         buttonname: "Agree and continue",
       ),
-      floatingActionButtonLocation:FloatingActionButtonLocation.centerFloat ,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

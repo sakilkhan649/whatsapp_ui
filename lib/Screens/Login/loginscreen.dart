@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp/Screens/OTP/otpscreen.dart';
 import 'package:whatsapp/Screens/Widgets/uihelper.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -11,9 +12,9 @@ class Loginscreen extends StatefulWidget {
 class _LoginscreenState extends State<Loginscreen> {
   TextEditingController phoneController = TextEditingController();
 
-  String selectedcountry = "Bangladesh";
-
+  // ✅ Ensure this value exists in the countries list
   List<String> countries = ["America", "Africa", "Italy", "Germany", "India"];
+  String selectedcountry = "India"; // or: countries[0];
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +49,7 @@ class _LoginscreenState extends State<Loginscreen> {
             padding: const EdgeInsets.only(left: 60, right: 60),
             child: DropdownButtonFormField(
               items: countries.map((String country) {
-                return DropdownMenuItem(
-                  child: Text(country.toString()),
-                  value: country,
-                );
+                return DropdownMenuItem(child: Text(country), value: country);
               }).toList(),
               onChanged: (value) {
                 setState(() {
@@ -71,7 +69,7 @@ class _LoginscreenState extends State<Loginscreen> {
           ),
           SizedBox(height: 20),
           Row(
-            mainAxisAlignment: .center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
                 width: 40,
@@ -108,6 +106,31 @@ class _LoginscreenState extends State<Loginscreen> {
           ),
         ],
       ),
+      floatingActionButton: UiHelper.CustomButton(
+        callback: () {
+          login(phoneController.text.toString());
+        },
+        buttonname: "Next",
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  login(String phonenumber) {
+    if (phonenumber == "") {
+      return ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Enter Phone Number"),
+          backgroundColor: Color(0xFF00A884),
+        ),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Otpscreen(phonenumber: phonenumber),
+        ),
+      );
+    }
   }
 }
